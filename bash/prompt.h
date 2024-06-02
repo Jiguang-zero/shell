@@ -11,8 +11,7 @@
 
 #include <unistd.h>
 
-extern void getPrompt(char* prompt);
-
+extern void printPrompt();
 
 
 #endif //BASH_SHELL_PROMPT_H
