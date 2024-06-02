@@ -15,4 +15,5 @@ add_executable(bash shell.cpp
         builtins/cd_command.h
         parser.cpp
         read.cpp
+        builtins/builtins.cpp
 )
