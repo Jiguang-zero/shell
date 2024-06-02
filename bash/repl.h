@@ -7,10 +7,12 @@
 #define ZEARO_BASH_REPL_H
 
 #ifndef ZEARO_BASH_INCLUDE_C_STDIO
+#define ZEARO_BASH_INCLUDE_C_STDIO
 #include "cstdio"
 #endif //ZEARO_BASH_INCLUDE_C_STDIO
 
 #ifndef ZEARO_BASH_INCLUDE_C_STDLIB
+#define ZEARO_BASH_INCLUDE_C_STDLIB
 #include "cstdlib"
 #endif // ZEARO_BASH_INCLUDE_C_STDLIB
 
