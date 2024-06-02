@@ -37,7 +37,14 @@ int zbash_execute_disk_command(char** args) {
     // Parent process
     else {
         do {
+            // WUNTRACED: If the child process enters a situation where execution is suspended,
+            // it returns immediately
             waitpid(pid, &status, WUNTRACED);
         }
+        // check the child process exited successfully or is terminated by signal or not.
+        while (!WIFEXITED(status) && !WIFSIGNALED(status));
     }
+
+    // The program will continue.
+    return 1;
 }
