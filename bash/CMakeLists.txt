@@ -4,10 +4,12 @@ project(ZearoBash)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(bash shell.cpp
-        prompt.cpp
+#        prompt.cpp
         repl.h
         repl.cpp
         read.h
         parser.h
         execute.h
+        read.cpp
+        parser.cpp
 )
