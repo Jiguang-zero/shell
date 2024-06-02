@@ -8,13 +8,15 @@
 #include "cstdlib"
 #endif // ZEARO_BASH_INCLUDE_C_STDLIB
 
+#include "prompt.h"
+
 void zbash_repl() {
     char * line;
     char ** args;
     int status;
 
     do {
-        printf("> ");
+        printPrompt();
         line = zbash_read_line();
         args = zbash_parse_line(line);
         status = zbash_execute(args);

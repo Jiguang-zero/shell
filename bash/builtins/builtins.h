@@ -11,24 +11,20 @@
  */
 extern int zbash_exit_command(char**);
 
+/**
+ * @brief help command. Show how to use this shell. Show the number of builtins we provided.
+ * @return 1. code status. REPL will keep on.
+ */
+extern int zbash_help_command(char**);
+
 #ifndef ZEARO_BASH_BUILTINS_FUNCTIONS_ARRAY
 #define ZEARO_BASH_BUILTINS_FUNCTIONS_ARRAY
 
 #include "cd_command.h"
 
-static const char* builtin_command[] = {
-#ifdef ZEARO_BASH_CD_COMMAND_H
-        "cd",
-#endif
-        "exit"
-};
+extern const char* builtin_command[];
 
-static int (*builtin_command_function[]) (char**) = {
-#ifdef ZEARO_BASH_CD_COMMAND_H
-        &zbash_cd_command,
-#endif
-        &zbash_exit_command,
-};
+extern int (*builtin_command_function[]) (char**);
 
 #endif //ZEARO_BASH_BUILTINS_FUNCTIONS_ARRAY
 
