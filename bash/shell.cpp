@@ -4,6 +4,7 @@
 
 
 #include "repl.h"
+#include "configs.h"
 
 /**
  * @brief The entry of the program, ZearoBash.
@@ -11,6 +12,7 @@
  */
 int main() {
     // Load configs.
+    loadConfigs();
 
     // Run command loop;
     zbash_repl();

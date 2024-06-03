@@ -26,7 +26,7 @@ static void cd_command_type_help() {
  * And this command will return 1 as repl will keep on.
  * @brief builtin function. cd [path]
  * @param args char**. There can only be two string in args.
- * @return int code status, The command will return 1 whatever results. The repl will keep on.
+ * @return int. code status, The command will return 1 whatever results. The repl will keep on.
  */
 static int zbash_cd_command(char** args) {
     if (args[1] == nullptr) {
@@ -35,7 +35,7 @@ static int zbash_cd_command(char** args) {
     else if (args[2] != nullptr) {
         fprintf(stderr, "zbash: there should only be one argument to \"cd\" command\n");
     }
-    else if (strcmp(args[1], "-V") == 0 || strcmp(args[1], "--version") == 0) {
+    else if (strcmp(args[1], "-H") == 0 || strcmp(args[1], "--help") == 0) {
         cd_command_type_help();
     }
     else {
