@@ -69,21 +69,32 @@ namespace zbashCommandCompleter {
         curIndex = -1;
         temp = {};
         options = {
-                {"ls",    {"-l", "-a", "-h", "-t", "-r", "-S", "-R", "-d", "-g", "-i", "-F", "-m", "-o", "-p", "-q"}},
-                {"cat",   {"-b", "-e", "-n", "-s", "-t", "-v", "-A", "-E", "-T", "-u"}},
-                {"cp",    {"-b", "-f", "-i", "-n", "-p", "-r", "-v", "-a", "-c", "-l", "-s", "-u"}},
-                {"mv",    {"-b", "-f", "-i", "-n", "-p", "-r", "-v", "-u", "-t", "-s", "-l"}},
-                {"rm",    {"-b", "-f", "-i", "-r", "-v", "-d", "-P", "-R", "-v"}},
-                {"more",  {"-c", "-d", "-e", "-f", "-i", "-I", "-n", "-N", "-p", "-s", "-t", "-v", "-w", "-z", "-M", "-S"}},
-                {"diff",  {"-b", "-B", "-C", "-E", "-F", "-I", "-L", "-N", "-P", "-Q", "-R", "-U", "-V", "-W", "-X", "-a",
-                                  "-c", "-d", "-e", "-f", "-i", "-n", "-p", "-q", "-r", "-s", "-t", "-u", "-v", "-w", "-x", "-y",
-                                  "-Z", "-H", "-M", "-T", "-O", "-Y", "-K", "-G", "-J", "-U"}},
-                {"grep",  {"-i", "-r", "-n", "-v", "-w", "-c", "-l", "-E", "-A", "-B", "-C", "-f", "-h", "-o", "-q", "-s"}},
-                {"mkdir", {"-p", "-v", "-m", "-Z", "-v", "-Z", "-Z", "-Z", "-Z"}},
-                {"touch", {"-a", "-c", "-m", "-r", "-t", "-d", "-u", "-v"}},
-                {"chmod", {"-c", "-f", "-v", "-R", "-r", "-x", "-w", "-u", "-g"}},
-                {"chown", {"-v", "-f", "-R", "-H", "-L", "-P", "-c", "-h", "-v"}},
-                {"ps",    {"-a", "-u", "-x", "-e", "-f", "-l", "-p", "-r", "-t"}}
+                // 内部命令
+                {"cd",      {}},
+                {"history", {}},
+                {"help",    {}},
+                {"exit",    {}},
+                {"clear",   {}},
+                {"echo",    {}},
+                {"alias",   {}},
+                {"unalias", {}},
+
+                // 外部命令
+                {"ls",      {"-l", "-a", "-h", "-t", "-r", "-S", "-R", "-d", "-g", "-i", "-F", "-m", "-o", "-p", "-q"}},
+                {"cat",     {"-b", "-e", "-n", "-s", "-t", "-v", "-A", "-E", "-T", "-u"}},
+                {"cp",      {"-b", "-f", "-i", "-n", "-p", "-r", "-v", "-a", "-c", "-l", "-s", "-u"}},
+                {"mv",      {"-b", "-f", "-i", "-n", "-p", "-r", "-v", "-u", "-t", "-s", "-l"}},
+                {"rm",      {"-b", "-f", "-i", "-r", "-v", "-d", "-P", "-R", "-v"}},
+                {"more",    {"-c", "-d", "-e", "-f", "-i", "-I", "-n", "-N", "-p", "-s", "-t", "-v", "-w", "-z", "-M", "-S"}},
+                {"diff",    {"-b", "-B", "-C", "-E", "-F", "-I", "-L", "-N", "-P", "-Q", "-R", "-U", "-V", "-W", "-X", "-a",
+                                    "-c", "-d", "-e", "-f", "-i", "-n", "-p", "-q", "-r", "-s", "-t", "-u", "-v", "-w", "-x", "-y",
+                                    "-Z", "-H", "-M", "-T", "-O", "-Y", "-K", "-G", "-J", "-U"}},
+                {"grep",    {"-i", "-r", "-n", "-v", "-w", "-c", "-l", "-E", "-A", "-B", "-C", "-f", "-h", "-o", "-q", "-s"}},
+                {"mkdir",   {"-p", "-v", "-m", "-Z", "-v", "-Z", "-Z", "-Z", "-Z"}},
+                {"touch",   {"-a", "-c", "-m", "-r", "-t", "-d", "-u", "-v"}},
+                {"chmod",   {"-c", "-f", "-v", "-R", "-r", "-x", "-w", "-u", "-g"}},
+                {"chown",   {"-v", "-f", "-R", "-H", "-L", "-P", "-c", "-h", "-v"}},
+                {"ps",      {"-a", "-u", "-x", "-e", "-f", "-l", "-p", "-r", "-t"}},
         };
     }
 
@@ -103,7 +114,7 @@ namespace zbashCommandCompleter {
         }
 
         // 补全"命令"
-        if (enteredPart.empty() || (enteredPart.size() == 1 && prevCh != ' ')) {
+        if (enteredPart.empty() || (enteredPart.size() == 1 && str.back() != ' ')) {
             if (enteredPart.empty()) {
                 for (const auto &option: options) {
                     temp.emplace_back(option.first);
@@ -118,7 +129,7 @@ namespace zbashCommandCompleter {
         }
 
         // 补全"选项"
-        if (enteredPart.size() > 1 && prevCh != ' ' && enteredPart.back()[0] == '-') {
+        if (enteredPart.size() > 1 && str.back() != ' ' && enteredPart.back()[0] == '-') {
             string command = enteredPart[0];
             for (const string &option: options[command]) {
                 if (option.compare(0, enteredPart.back().length(), enteredPart.back()) == 0) {
@@ -128,8 +139,8 @@ namespace zbashCommandCompleter {
         }
 
         // 补全目录
-        if ((!enteredPart.empty() && prevCh == ' ') || (enteredPart.size() > 1 && enteredPart.back()[0] != '-')) {
-            if (prevCh == ' ') {
+        if ((!enteredPart.empty() && str.back() == ' ') || (enteredPart.size() > 1 && enteredPart.back()[0] != '-')) {
+            if (str.back() == ' ') {
                 string dir = getCurrentDir();
                 string prefix;
                 temp = getFilesInDir(dir, prefix);

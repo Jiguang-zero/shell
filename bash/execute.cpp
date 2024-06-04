@@ -67,6 +67,7 @@ int zbash_execute(char *line, char **args) {
     } else if (isBackgroundCommand(line)) {
         // 在后台运行程序
         mode = 1;
+        return zbash_execute_disk_command(args, mode);
     }
     /*
      // We just implemented the redirection of the echo function
@@ -81,9 +82,9 @@ int zbash_execute(char *line, char **args) {
                 return (*builtin_command_function[i])(args);
             }
         }
+        // 执行外部命令, mode为 0表示前台执行，mode为 1表示后台执行
+        return zbash_execute_disk_command(args, mode);
     }
-    // 执行外部命令, mode为 0表示前台执行，mode为 1表示后台执行
-    return zbash_execute_disk_command(args, mode);
 }
 
 int zbash_execute_disk_command(char **args, int mode) {
