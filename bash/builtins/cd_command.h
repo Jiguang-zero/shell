@@ -35,7 +35,7 @@ static int zbash_cd_command(char** args) {
     else if (args[2] != nullptr) {
         fprintf(stderr, "zbash: there should only be one argument to \"cd\" command\n");
     }
-    else if (strcmp(args[1], "-V") == 0 || strcmp(args[1], "--version") == 0) {
+    else if (strcmp(args[1], "-H") == 0 || strcmp(args[1], "--help") == 0) {
         cd_command_type_help();
     }
     else {
