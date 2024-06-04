@@ -20,6 +20,8 @@
 
 #include "pipeline.h"
 
+#include "alias.h"
+
 bool isPipeCommand(char *line) {
     for (int i = 0; i < strlen(line); i++) {
         if (line[i] == '|') {
@@ -76,6 +78,8 @@ int zbash_execute(char *line, char **args) {
     }
     */
     else {
+        
+
         // 执行内置命令
         for (int i = 0; i < builtin_command_numbers(); i++) {
             if (strcmp(args[0], builtin_command[i]) == 0) {

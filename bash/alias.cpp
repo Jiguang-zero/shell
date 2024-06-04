@@ -72,4 +72,8 @@ void alias::printTheMap() {
     }
 }
 
+std::unordered_map<std::string, std::string> alias::getAliasMapOutSide() {
+    return aliasMap;
+}
+
 
