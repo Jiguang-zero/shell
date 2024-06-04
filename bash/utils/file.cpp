@@ -57,7 +57,7 @@ namespace zearo_bash_shell::utils {
     }
 
     void File::overWriteTheFile(const std::string &fileName, char *content) {
-        std::ofstream file(fileName, std::ios::app);
+        std::ofstream file(fileName);
         if (file.is_open()) {
             file << content << std::endl;
             file.close();

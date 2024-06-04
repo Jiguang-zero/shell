@@ -11,6 +11,8 @@ static void echo_command_type_help() {
     printf("%s\n", "echo [content] [redirect] [goal]");
     puts("There must be more than one argument.");
     puts("Please make sure that there can only be one redirect sign.");
+    puts("You can just append a string to a file;");
+    puts("when you input more than one, it will choose the last one.");
     puts("When you use echo content, it will print the content on the screen.");
     puts("When you use echo content > fileName, it will overwrite the content into the file.");
     puts("And you can also use echo content >> fileName to just add some content to the file.");
@@ -42,8 +44,9 @@ static int zbash_echo_command(char** args) {
 
     auto invalidCommand = [&] () -> void {
         fprintf(stderr, "zbash: invalid command\n");
-        free(content);
-        free(fileName);
+        // To avoid some mistakes.
+        content = nullptr;
+        fileName = nullptr;
     };
 
 
@@ -107,8 +110,6 @@ static int zbash_echo_command(char** args) {
         }
     }
 
-    free(content);
-    free(fileName);
 
     return 1;
 }
