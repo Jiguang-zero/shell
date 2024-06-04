@@ -52,6 +52,12 @@ public:
      * @return status code, 1 success, 0 fail
      */
     int removeAlias(const std::string& aliasName);
+
+    /**
+     * @brief not std::unordered_map<std::string, std::string>&
+     * @return aliasMap
+     */
+    std::unordered_map<std::string, std::string> getAliasMapOutSide();
 };
 
 #endif //ZEARO_BASH_ALIAS_H
