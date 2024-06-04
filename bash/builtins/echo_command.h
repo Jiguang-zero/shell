@@ -29,10 +29,12 @@ static int zbash_echo_command(char** args) {
     short flag = 0; // 0 not redirect, 1 > redirect, 2 >> redirect, 3 < redirect
     if (args[1] == nullptr) {
         fprintf(stderr, "echo command must have argument.\n");
+        return 1;
     }
 
-    if (strcmp(args[1], "--help") == 0 || strcmp(args[1], "-H") == 0) {
+    if ((strcmp(args[1], "--help") == 0 || strcmp(args[1], "-H") == 0) && args[2] == nullptr) {
         echo_command_type_help();
+        return 1;
     }
 
     char* content = nullptr;
@@ -40,8 +42,8 @@ static int zbash_echo_command(char** args) {
 
     auto invalidCommand = [&] () -> void {
         fprintf(stderr, "zbash: invalid command\n");
-//        free(content);
-//        free(fileName);
+        free(content);
+        free(fileName);
     };
 
 
@@ -51,19 +53,11 @@ static int zbash_echo_command(char** args) {
             "<"
     };
 
-    for (auto index = args + 1; index ; index ++ ) {
-        if (flag == 0) {
-            content = *index;
-        }
-        else {
-            fileName = *index;
-            if (index + 1) {
-                invalidCommand();
-                return 1;
-            }
-        }
-        for (short i = 0; i < 3; i ++ ) {
-            if (strcmp(reinterpret_cast<const char*>(index), redirectCommand[i]) == 0) {
+    bool isRedirectCommand = false;
+    for (auto index = args + 1; *index ; index ++ ) {
+        for (short i = 0; i < 3 && !isRedirectCommand; i ++ ) {
+            if (strcmp(*index, redirectCommand[i]) == 0) {
+                isRedirectCommand = true;
                 if (flag) {
                     invalidCommand();
                     return 1;
@@ -71,11 +65,27 @@ static int zbash_echo_command(char** args) {
                 flag = static_cast<short>(i + 1);
             }
         }
+        if (isRedirectCommand) {
+            isRedirectCommand = false;
+            continue;
+        }
+
+        // We should update content after checking flag, or the signs such as '<' will be writen into content.
+        if (flag == 0) {
+            content = *index;
+        }
+        else {
+            fileName = *index;
+            if (*(index + 1)) {
+                invalidCommand();
+                return 1;
+            }
+        }
     }
 
     // Print the content to the screen
     if (flag == 0) {
-        printf("%s", content);
+        printf("%s\n", content);
     } else if (flag == 1 || flag == 2) {
         zearo_bash_shell::utils::File::createFileIfNotExists(fileName);
         if (!content || !fileName) {
@@ -97,8 +107,8 @@ static int zbash_echo_command(char** args) {
         }
     }
 
-//    free(content);
-//    free(fileName);
+    free(content);
+    free(fileName);
 
     return 1;
 }
