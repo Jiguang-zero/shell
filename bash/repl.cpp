@@ -17,7 +17,6 @@ void zbash_repl() {
     char *line;
     char **args;
     int status;
-    char *prompt;
 
     do {
         printPrompt();
@@ -25,10 +24,12 @@ void zbash_repl() {
 
         // Add any command to the history, else if line is nullptr;
         addCommandToHistory(line);
+        char* line_copy = strdup(line);
         args = zbash_parse_line(line);
-        status = zbash_execute(args);
+        status = zbash_execute(line_copy, args);
 
         free(line);
+        free(line_copy);
         free(args);
     } while (status);
 }

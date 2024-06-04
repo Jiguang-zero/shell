@@ -11,9 +11,10 @@
 
 #ifndef ZEARO_BASH_INCLUDE_C_STDIO
 #define ZEARO_BASH_INCLUDE_C_STDIO
-#include "cstdio"
-#endif //ZEARO_BASH_INCLUDE_C_STDIO
 
+#include "cstdio"
+
+#endif //ZEARO_BASH_INCLUDE_C_STDIO
 
 
 /**
@@ -22,8 +23,7 @@
  * @return int. The status code.
  * @instruction args[0] should not be nullptr. So we should make a judgment before we call the function.
  */
-extern int zbash_execute(char** args);
-
+extern int zbash_execute(char *line, char **args);
 
 
 /**
@@ -31,6 +31,6 @@ extern int zbash_execute(char** args);
  * @param args char**. The args of the commands.
  * @return int. The statue code. 0: REPL program will be terminated.
  */
-extern int zbash_execute_disk_command(char** args);
+extern int zbash_execute_disk_command(char **args, int mode);
 
 #endif //ZEARO_BASH_EXECUTE_H

@@ -15,4 +15,5 @@ add_executable(zearoBash shell.cpp
         history.cpp
         utils/file.cpp
         utils/string_dealing.cpp
+        pipeline.cpp
 )
