@@ -9,7 +9,9 @@
 #include <cstdlib>
 #endif // ZEARO_BASH_INCLUDE_C_STDLIB
 
-#include "prompt.h"
+#ifndef ZEARO_BASH_HISTORY_H
+#include "history.h"
+#endif
 
 void zbash_repl() {
     char *line;
@@ -20,6 +22,9 @@ void zbash_repl() {
     do {
         printPrompt();
         line = zbash_read_line();
+
+        // Add any command to the history, else if line is nullptr;
+        addCommandToHistory(line);
         args = zbash_parse_line(line);
         status = zbash_execute(args);
 

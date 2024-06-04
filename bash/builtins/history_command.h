@@ -27,10 +27,10 @@ static void history_command_type_help() {
  * @return 1
  */
 static int zbash_history_command(char** args) {
-//#ifdef ZEARO_BASH_HISTORY_FILE
+#ifdef ZEARO_BASH_HISTORY_FILE
     if (args[1] == nullptr) {
         printLastNCommand(1);
-    } else if (args[3] != nullptr) {
+    } else if (args[2] != nullptr) {
         fprintf(stderr, "zbash: there should only be one or zero argument to history\n");
     } else if (strcmp(args[1], "-H") == 0 || strcmp(args[1], "--help") == 0) {
         history_command_type_help();
@@ -43,7 +43,7 @@ static int zbash_history_command(char** args) {
            printLastNCommand(option);
        }
     }
-//#endif
+#endif
     // Builtin command will return 1 whatever results it generates.
     return 1;
 }

@@ -7,7 +7,6 @@
 #include <iostream>
 #include <cstdlib>
 #include <fstream>
-#include <unistd.h>
 
 static void createHistoryFileIfNotExists() {
 #ifdef ZEARO_BASH_HISTORY_FILE

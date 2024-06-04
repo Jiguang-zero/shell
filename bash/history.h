@@ -7,7 +7,7 @@
 
 #include "configs.h"
 
-//#ifdef ZEARO_BASH_HISTORY_FILE
+#ifdef ZEARO_BASH_HISTORY_FILE
 
 #include "utils/file.h"
 
@@ -23,7 +23,9 @@ extern void printLastNCommand(int n);
  */
 extern void addCommandToHistory(char* command);
 
-//#endif
+extern std::string getHistoryFilePath();
+
+#endif
 
 
 #endif //ZEARO_BASH_HISTORY_H
