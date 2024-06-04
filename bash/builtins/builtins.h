@@ -21,6 +21,7 @@ extern int zbash_help_command(char**);
 #define ZEARO_BASH_BUILTINS_FUNCTIONS_ARRAY
 
 #include "cd_command.h"
+#include "history_command.h"
 
 extern const char* builtin_command[];
 
