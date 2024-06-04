@@ -27,6 +27,8 @@ namespace zearo_bash_shell::utils {
         return lines;
     }
 
+
+
     void File::addStringToTheEnd(const std::string &fileName, char *line) {
         std::ofstream file(fileName, std::ios::app);
         if (file.is_open()) {
@@ -36,6 +38,47 @@ namespace zearo_bash_shell::utils {
         else {
             fprintf(stderr, "file open error.");
         }
+    }
+
+    bool File::fileExists(const std::string &filename) {
+        std::ifstream file(filename);
+        return file.good();
+    }
+
+    void File::createFileIfNotExists(const std::string &filename) {
+        if (!fileExists(filename)) {
+            std::ofstream file(filename);
+            if (file.is_open()) {
+                file.close();
+            } else {
+                fprintf(stderr, "create file error.\n");
+            }
+        }
+    }
+
+    void File::overWriteTheFile(const std::string &fileName, char *content) {
+        std::ofstream file(fileName, std::ios::app);
+        if (file.is_open()) {
+            file << content << std::endl;
+            file.close();
+        }
+        else {
+            fprintf(stderr, "file open error.");
+        }
+    }
+
+    void File::printWholeFile(const std::string &fileName) {
+        std::string line;
+
+        std::fstream file(fileName);
+        if (!file.is_open()) {
+            fprintf(stderr, "file open error\n");
+        }
+
+        while (std::getline(file, line)) {
+            puts(line.c_str());
+        }
+        file.close();
     }
 
 }

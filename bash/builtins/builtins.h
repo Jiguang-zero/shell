@@ -22,6 +22,7 @@ extern int zbash_help_command(char**);
 
 #include "cd_command.h"
 #include "history_command.h"
+#include "echo_command.h"
 
 extern const char* builtin_command[];
 

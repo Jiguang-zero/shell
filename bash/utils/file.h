@@ -19,6 +19,11 @@ namespace zearo_bash_shell::utils {
          */
         static std::vector<std::string> getLastNLines(const std::string& fileName, int n);
 
+        /**
+         * @brief print the while file
+         * @param fileName
+         */
+        static void printWholeFile(const std::string& fileName);
 
         /**
          * @brief Append a string_dealing to a file.
@@ -26,6 +31,23 @@ namespace zearo_bash_shell::utils {
          * @param line
          */
         static void addStringToTheEnd(const std::string& fileName, char* line);
+
+        /**
+         * @brief overwrite the file
+         * @param fileName
+         * @param content char*
+         */
+        static void overWriteTheFile(const std::string& fileName, char* content);
+
+        /**
+         * @brief check a file exists or not
+         * @param filename
+         * @return
+         */
+        static bool fileExists(const std::string& filename);
+
+
+        static void createFileIfNotExists(const std::string& filename);
     };
 }
 
