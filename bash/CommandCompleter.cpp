@@ -23,7 +23,7 @@ namespace zbashCommandCompleter {
         fs::path current_dir = fs::current_path(ec);
 
         if (ec) {
-//            std::cerr << "Error: " << ec.message() << std::endl;
+            //            std::cerr << "Error: " << ec.message() << std::endl;
             return "";
         }
 
@@ -35,12 +35,12 @@ namespace zbashCommandCompleter {
         fs::path path(dir_path);
 
         if (!fs::exists(path)) {
-//            std::cerr << "Error: Directory does not exist" << std::endl;
+            //            std::cerr << "Error: Directory does not exist" << std::endl;
             return files;
         }
 
         if (!fs::is_directory(path)) {
-//            std::cerr << "Error: Not a directory" << std::endl;
+            //            std::cerr << "Error: Not a directory" << std::endl;
             return files;
         }
 
@@ -69,15 +69,21 @@ namespace zbashCommandCompleter {
         curIndex = -1;
         temp = {};
         options = {
-                {"ls",   {"-l", "-a", "-h", "-t", "-r", "-S", "-R"}},
-                {"cat",  {"-b", "-e", "-n", "-s", "-t", "-v"}},
-                {"cp",   {"-b", "-f", "-i", "-n", "-p", "-r", "-v"}},
-                {"mv",   {"-b", "-f", "-i", "-n", "-p", "-r", "-v"}},
-                {"rm",   {"-b", "-f", "-i", "-r"}},
-                {"more", {"-c", "-d", "-e", "-f", "-i", "-I", "-n", "-N", "-p", "-s", "-t", "-v"}},
-                {"diff", {"-b", "-B", "-C", "-E", "-F", "-I", "-L", "-N", "-P", "-Q", "-R", "-U", "-V", "-W", "-X", "-a",
-                                 "-c", "-d", "-e", "-f", "-i", "-n", "-p", "-q", "-r", "-s", "-t", "-u", "-v", "-w", "-x", "-y"}},
-                {"grep", {"-i", "-r", "-n", "-v", "-w", "-c", "-l", "-E"}}
+                {"ls",    {"-l", "-a", "-h", "-t", "-r", "-S", "-R", "-d", "-g", "-i", "-F", "-m", "-o", "-p", "-q"}},
+                {"cat",   {"-b", "-e", "-n", "-s", "-t", "-v", "-A", "-E", "-T", "-u"}},
+                {"cp",    {"-b", "-f", "-i", "-n", "-p", "-r", "-v", "-a", "-c", "-l", "-s", "-u"}},
+                {"mv",    {"-b", "-f", "-i", "-n", "-p", "-r", "-v", "-u", "-t", "-s", "-l"}},
+                {"rm",    {"-b", "-f", "-i", "-r", "-v", "-d", "-P", "-R", "-v"}},
+                {"more",  {"-c", "-d", "-e", "-f", "-i", "-I", "-n", "-N", "-p", "-s", "-t", "-v", "-w", "-z", "-M", "-S"}},
+                {"diff",  {"-b", "-B", "-C", "-E", "-F", "-I", "-L", "-N", "-P", "-Q", "-R", "-U", "-V", "-W", "-X", "-a",
+                                  "-c", "-d", "-e", "-f", "-i", "-n", "-p", "-q", "-r", "-s", "-t", "-u", "-v", "-w", "-x", "-y",
+                                  "-Z", "-H", "-M", "-T", "-O", "-Y", "-K", "-G", "-J", "-U"}},
+                {"grep",  {"-i", "-r", "-n", "-v", "-w", "-c", "-l", "-E", "-A", "-B", "-C", "-f", "-h", "-o", "-q", "-s"}},
+                {"mkdir", {"-p", "-v", "-m", "-Z", "-v", "-Z", "-Z", "-Z", "-Z"}},
+                {"touch", {"-a", "-c", "-m", "-r", "-t", "-d", "-u", "-v"}},
+                {"chmod", {"-c", "-f", "-v", "-R", "-r", "-x", "-w", "-u", "-g"}},
+                {"chown", {"-v", "-f", "-R", "-H", "-L", "-P", "-c", "-h", "-v"}},
+                {"ps",    {"-a", "-u", "-x", "-e", "-f", "-l", "-p", "-r", "-t"}}
         };
     }
 

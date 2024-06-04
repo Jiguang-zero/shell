@@ -13,4 +13,6 @@ add_executable(zearoBash shell.cpp
         repl.cpp
         CommandCompleter.h
         CommandCompleter.cpp
+        pipeline.cpp
+        pipeline.h
 )

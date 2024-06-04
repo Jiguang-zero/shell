@@ -35,13 +35,16 @@ namespace zearo_bash_shell {
                 recoverTerminalInputWay();
                 exit(EXIT_SUCCESS);
             } else if (ch == '\n') {
+                completer->reInitialize();
                 return inputEnter(line);
             } else if (ch == '\t') {
                 auto p = completer->completePart(line);
-                for (int i = 0; i < p.second; i++) inputBackSpace(line);
-                auto t = completer->getTemp(p.first);
-                line += t;
-                printf("%s", t.c_str());
+                if (p.first != -1) {
+                    for (int i = 0; i < p.second; i++) inputBackSpace(line);
+                    auto t = completer->getTemp(p.first);
+                    line += t;
+                    printf("%s", t.c_str());
+                }
             }
 
                 // When input backspace or del
@@ -57,7 +60,7 @@ namespace zearo_bash_shell {
                 line.push_back(static_cast<char>(ch));
                 currPosition++;
             }
-            if(completer->getPrevCh() != '\t' && ch != '\t') {
+            if (completer->getPrevCh() != '\t' && ch != '\t') {
                 completer->reInitialize();
             }
             completer->setPrevCh(ch);
