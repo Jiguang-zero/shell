@@ -14,6 +14,7 @@
 #include "builtins/builtins.h"
 #endif //ZEARO_BASH_INCLUDE_BUILTINS
 
+
 int zbash_execute(char** args) {
     if (args == nullptr || args[0] == nullptr) {
         return 1;

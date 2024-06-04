@@ -42,7 +42,7 @@ namespace zearo_bash_shell {
 
         /**
          * @brief When we press backspace key, it will call this function.
-         * @param line string&
+         * @param line string_dealing&
          */
         static void inputBackSpace(string & line);
 
