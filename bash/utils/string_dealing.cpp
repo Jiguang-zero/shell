@@ -18,7 +18,7 @@ namespace zearo_bash_shell::utils {
             return ERROR_NUMBER_OPTION;
         }
         int ans = 0;
-        for (auto i = 1; i < len; i ++ ) {
+        for (auto i = 1; i < len; i++) {
             if (!isDigit(option[i])) {
                 return ERROR_NUMBER_OPTION;
             }
@@ -35,24 +35,18 @@ namespace zearo_bash_shell::utils {
     void
     string_dealing::transferStringToMap(std::unordered_map<std::string, std::string> &map,
                                         const std::string &string) {
-        auto skipSpace = [] (int& i, const std::string& string) {
-            while (i < string.length() && string[i] == ' ') {
-                i ++ ;
-            }
-        };
-        for (int i = 0; i < string.length(); ) {
-            skipSpace(i, string);
-            std::string key;
-            while (i < string.length() && string[i] != ':') {
-                key += string[i ++ ];
-            }
-            i ++;
-            skipSpace(i, string);
-            std::string value;
-            while (i < string.length() && string[i] != ',') {
-                value += string[i ++ ];
-            }
-            i ++;
+        auto alias = split(string, ",");
+        for (const auto &alia: alias) {
+            std::string key, value;
+
+            int l = -1, r = (int) alia.length();
+            while (alia[++l] != ':') {}
+            key = alia.substr(0, l);
+
+            while (alia[++l] == ' ') {}
+            while (alia[--r] == ' ') {}
+            value = alia.substr(l, r - l + 1);
+
             map[key] = value;
         }
     }
@@ -60,7 +54,7 @@ namespace zearo_bash_shell::utils {
     std::string string_dealing::transferMapToString(std::unordered_map<std::string, std::string> &map) {
         std::ostringstream oss;
 
-        for (auto it = map.begin(); it != map.end(); it ++ ) {
+        for (auto it = map.begin(); it != map.end(); it++) {
             auto pair = *it;
             oss << pair.first;
             oss << ": ";
@@ -69,8 +63,22 @@ namespace zearo_bash_shell::utils {
                 oss << ",";
             }
         }
-
         return oss.str();
+    }
+
+    std::vector<std::string> string_dealing::split(const std::string &str, const std::string &delim) {
+        std::vector<std::string> res;
+        if (str.empty()) return res;
+        size_t prev = 0, pos = 0;
+        do {
+            pos = str.find(delim, prev);
+            if (pos == std::string::npos) pos = str.length();
+            std::string substr = str.substr(prev, pos - prev);
+            if (!substr.empty()) res.emplace_back(substr);
+            prev = pos + delim.length();
+        } while (pos < str.length() && prev < str.length());
+        return res;
+
     }
 } // zearo_bash_shell
 // utils

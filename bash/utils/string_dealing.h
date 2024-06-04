@@ -9,6 +9,7 @@
 
 #include <unordered_map>
 #include <string>
+#include <vector>
 
 namespace zearo_bash_shell::utils {
     class string_dealing {
@@ -37,6 +38,9 @@ namespace zearo_bash_shell::utils {
         static std::string transferMapToString(std::unordered_map<std::string, std::string>&map);
 
         static bool isDigit(char character);
+
+        static std::vector<std::string> split(const std::string &str, const std::string &delim);
+
     };
 
 } // zearo_bash_shell
