@@ -25,6 +25,7 @@ void alias::initFromTheFile(const char *fileName) {
     auto prefix = ZEARO_BASH_CONFIGS_ALIAS;
 
     auto string = File::getSubstringAfterPrefix(fileName, prefix);
+    printf("%s\n", string.c_str());
     string_dealing::transferStringToMap(aliasMap, string);
 
 #endif
@@ -65,6 +66,12 @@ void alias::writeTheMapIntoFile() {
             ZEARO_BASH_CONFIGS_ALIAS,
             string_dealing::transferMapToString(aliasMap)
             );
+}
+
+void alias::printTheMap() {
+    for (const auto & pair : aliasMap) {
+        printf("%s: %s\n", pair.first.c_str(), pair.second.c_str());
+    }
 }
 
 

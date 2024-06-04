@@ -36,6 +36,8 @@ public:
 
     void writeTheMapIntoFile();
 
+    void printTheMap();
+
     /**
      * @brief add alia to the map
      * @param originName

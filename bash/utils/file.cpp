@@ -122,6 +122,7 @@ namespace zearo_bash_shell::utils {
         // write into the file again
         std::ofstream oFile(fileName);
         for (const auto & l : lines) {
+            printf("%s\n", l.c_str());
             oFile << l << std::endl;
         }
         oFile.close();

@@ -40,7 +40,16 @@ static void createConfigsFileIfNotExist() {
     }
 
     std::string filePath = std::string(homeDir) + "/" + ZEARO_BASH_CONFIGS_FILE;
-    File::createFileIfNotExists(filePath);
+    if (!File::fileExists(filePath)) {
+        std::ofstream file(filePath);
+        if (file.is_open()) {
+            auto alias_prefix = ZEARO_BASH_CONFIGS_ALIAS;
+            file << alias_prefix << ": ";
+            file.close();
+        } else {
+            fprintf(stderr, "create file error.\n");
+        }
+    }
 
 #endif
 }

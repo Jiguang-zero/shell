@@ -5,6 +5,8 @@
 #ifndef ZEAROBASH_ALIAS_AND_UNALIAS_COMMAND_H
 #define ZEAROBASH_ALIAS_AND_UNALIAS_COMMAND_H
 
+#include "../alias.h"
+
 static void alias_command_type_help() {
     printf("%s\n", "alias");
     printf("%s\n", "alias [name] = [original-command]");
@@ -19,7 +21,8 @@ static int zbash_alias_command(char **args) {
     int argc = 0;
     while (args[argc + 1]) argc++;
     if (argc == 0) {
-        // 打印所有的alias
+        alias::getInstance()->printTheMap();
+        return 1;
     }
 
     if (argc == 1) {
@@ -39,7 +42,31 @@ static int zbash_alias_command(char **args) {
         fprintf(stderr, "zbash: invalid command where is the = ?");
         return 1;
     } else {
-        // mapAlias[args[1]] = args[3];
+        int totalLength = 0;
+        for (int i = 3; i <= argc; i ++ ) {
+            totalLength += static_cast<int>(strlen(args[i]));
+            if (i > 3) {
+                totalLength += 1;
+            }
+        }
+
+        char* mergedString = new char[totalLength + 1];
+        int currPosition = 0;
+
+        for (int i = 3; i <= argc; i ++ ) {
+            if (i > 3) {
+                mergedString[currPosition] = ' ';
+                currPosition ++;
+            }
+            strcpy(mergedString + currPosition, args[i]);
+            currPosition += static_cast<int>(strlen(args[i]));
+        }
+        mergedString[currPosition] = '\0';
+
+        if (alias::getInstance()->addAlias(mergedString, args[1]) == 0) {
+            fprintf(stderr, "alias has existed.\n");
+        }
+        free(mergedString);
     }
     return 1;
 }
@@ -51,6 +78,7 @@ static void unalias_command_type_help() {
     printf("%s\n", "unalias -H");
     printf("%s\n", "unalias --help");
 }
+
 
 #ifndef ZEARO_BASH_UNALIAS_COMMAND_H
 #define ZEARO_BASH_UNALIAS_COMMAND_H
@@ -68,11 +96,13 @@ static int zbash_unalias_command(char **args) {
         fprintf(stderr, "zbash: less arguments to \"unalias\"\n");
         return 1;
     } else {
-        if (strcmp(args[1], "-H") != 0 || strcmp(args[1], "--help") != 0) {
+        if (strcmp(args[1], "-H") == 0 || strcmp(args[1], "--help") == 0) {
             unalias_command_type_help();
             return 1;
         }
-        // mapAlias.erase(args[1]);
+        if (alias::getInstance()->removeAlias(args[1]) == 0) {
+            fprintf(stderr, "alias does not exist.\n");
+        }
     }
 
     return 1;
