@@ -35,23 +35,22 @@ namespace zearo_bash_shell::utils {
     void
     string_dealing::transferStringToMap(std::unordered_map<std::string, std::string> &map,
                                         const std::string &string) {
-        printf("%s\n", string.c_str());
-        for (int i = 0; i < string.length(); ) {
+        auto skipSpace = [] (int& i, const std::string& string) {
             while (i < string.length() && string[i] == ' ') {
                 i ++ ;
             }
+        };
+        for (int i = 0; i < string.length(); ) {
+            skipSpace(i, string);
             std::string key;
             while (i < string.length() && string[i] != ':') {
-                key += string[i];
-                i ++;
+                key += string[i ++ ];
             }
             i ++;
-            while (i < string.length() && string[i] == ' ') {
-                i ++;
-            }
+            skipSpace(i, string);
             std::string value;
             while (i < string.length() && string[i] != ',') {
-                value += string[i];
+                value += string[i ++ ];
             }
             i ++;
             map[key] = value;
