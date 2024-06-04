@@ -67,9 +67,14 @@ int zbash_execute(char *line, char **args) {
     } else if (isBackgroundCommand(line)) {
         // 在后台运行程序
         mode = 1;
-    } else if (isRedirectCommand(line)) {
+    }
+    /*
+     // We just implemented the redirection of the echo function
+    else if (isRedirectCommand(line)) {
         // 执行重定向命令
-    } else {
+    }
+    */
+    else {
         // 执行内置命令
         for (int i = 0; i < builtin_command_numbers(); i++) {
             if (strcmp(args[0], builtin_command[i]) == 0) {
