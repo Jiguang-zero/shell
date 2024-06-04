@@ -5,10 +5,7 @@
 #ifndef ZEARO_BASH_CD_COMMAND_H
 #define ZEARO_BASH_CD_COMMAND_H
 
-#ifndef ZEARO_BASH_INCLUDE_C_STDIO
-#define ZEARO_BASH_INCLUDE_C_STDIO
 #include <cstdio>
-#endif //ZEARO_BASH_INCLUDE_C_STDIO
 
 #include <cstring>
 
@@ -25,7 +22,7 @@ static void cd_command_type_help() {
  * cd command: cd [path] || cd [option]. There should only be one argument of cd command.
  * And this command will return 1 as repl will keep on.
  * @brief builtin function. cd [path]
- * @param args char**. There can only be two string in args.
+ * @param args char**. There can only be two string_dealing in args.
  * @return int. code status, The command will return 1 whatever results. The repl will keep on.
  */
 static int zbash_cd_command(char** args) {

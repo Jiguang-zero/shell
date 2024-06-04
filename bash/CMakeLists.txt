@@ -7,6 +7,10 @@ add_executable(zearoBash shell.cpp
         prompt.cpp
         parser.cpp
         read.cpp
+        utils/file.h
+        utils/file.cpp
+        utils/string_dealing.cpp
+        utils/string_dealing.h
         builtins/builtins.cpp
         execute.cpp
         repl.cpp
