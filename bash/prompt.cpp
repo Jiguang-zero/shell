@@ -28,8 +28,7 @@ void printPrompt() {
         currentDir.replace(0, homeDir.length(), "~");
     }
 
-    // get the prompt
-    // uid_t euid = getuid();
+    // 获取当前用户的操作权限
     char promptCharacter = getuid() ? '$' : '#';
 
     printf("%s@%s:%s%c ", username, hostname, currentDir.c_str(), promptCharacter);

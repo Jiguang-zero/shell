@@ -3,18 +3,20 @@
 //
 
 #include "repl.h"
+#include "prompt.h"
 
 #ifndef ZEARO_BASH_INCLUDE_C_STDLIB
-#include "cstdlib"
+#include <cstdlib>
 #endif // ZEARO_BASH_INCLUDE_C_STDLIB
 
 void zbash_repl() {
-    char * line;
-    char ** args;
+    char *line;
+    char **args;
     int status;
+    char *prompt;
 
     do {
-        printf("> ");
+        printPrompt();
         line = zbash_read_line();
         args = zbash_parse_line(line);
         status = zbash_execute(args);
