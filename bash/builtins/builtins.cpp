@@ -15,6 +15,9 @@ const char* builtin_command[] = {
 #ifdef ZEARO_BASH_HISTORY_COMMAND_H
         "history",
 #endif
+#ifdef ZEARO_BASH_ECHO_COMMAND_H
+        "echo",
+#endif
         "help",
         "exit"
 };
@@ -26,6 +29,9 @@ int (*builtin_command_function[]) (char**) = {
 #endif
 #ifdef ZEARO_BASH_HISTORY_COMMAND_H
         &zbash_history_command,
+#endif
+#ifdef ZEARO_BASH_ECHO_COMMAND_H
+        &zbash_echo_command,
 #endif
         &zbash_help_command,
         &zbash_exit_command,
