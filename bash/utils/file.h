@@ -46,6 +46,26 @@ namespace zearo_bash_shell::utils {
          */
         static bool fileExists(const std::string& filename);
 
+        /**
+         * @brief check the file exist a line which begins with "content: "
+         * @param fileName
+         * @param content
+         * @return if find not a line, return ""; return the line which does not include content:
+         */
+        static std::string getSubstringAfterPrefix(const std::string& fileName, const std::string& content);
+
+        /**
+         * @brief replace line with prefix.
+         * @param fileName
+         * @param prefix
+         * @param newLine
+         * For example, replaceLineInFileWithPrefix("example.txt", "prefix", "newline") \n
+         * And the new line in file will be: prefix: newline
+         */
+        static void replaceLineInFileWithPrefix(
+                const std::string& fileName,
+                const std::string& prefix,
+                const std::string& newLine);
 
         static void createFileIfNotExists(const std::string& filename);
     };

@@ -3,6 +3,7 @@
 //
 
 #include "file.h"
+#include <vector>
 
 namespace zearo_bash_shell::utils {
 
@@ -79,6 +80,51 @@ namespace zearo_bash_shell::utils {
             puts(line.c_str());
         }
         file.close();
+    }
+
+    std::string File::getSubstringAfterPrefix(const std::string &fileName, const std::string& content) {
+        std::string line;
+
+        std::fstream file(fileName);
+        if (!file.is_open()) {
+            fprintf(stderr, "file open error\n");
+        }
+        auto prefix = content + ": ";
+        while (std::getline(file, line)) {
+            if (line.find(prefix) == 0) {
+                file.close();
+                return line.substr(prefix.length());
+            }
+        }
+        file.close();
+        return "";
+    }
+
+    void File::replaceLineInFileWithPrefix(const std::string &fileName, const std::string &prefix,
+                                           const std::string &newLine) {
+        std::string line;
+        std::vector<std::string> lines;
+
+        std::fstream file(fileName);
+        if (!file.is_open()) {
+            fprintf(stderr, "file open error\n");
+        }
+        auto newPrefix = prefix + ": ";
+        while (std::getline(file, line)) {
+            if (line.find(newPrefix) == 0) {
+                lines.emplace_back(newPrefix + newLine);
+                continue;
+            }
+            lines.emplace_back(line);
+        }
+        file.close();
+
+        // write into the file again
+        std::ofstream oFile(fileName);
+        for (const auto & l : lines) {
+            oFile << l << std::endl;
+        }
+        oFile.close();
     }
 
 }

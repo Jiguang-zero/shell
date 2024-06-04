@@ -7,6 +7,9 @@
 
 #define ERROR_NUMBER_OPTION (-1)
 
+#include <unordered_map>
+#include <string>
+
 namespace zearo_bash_shell::utils {
     class string_dealing {
     public:
@@ -16,6 +19,22 @@ namespace zearo_bash_shell::utils {
          * @return n, int. And when the option does not satisfy the condition, it will return -1;
          */
         static int getNumberOfOption(char* option);
+
+        /**
+         * @brief transfer string to map. The string must be with the format like: a: b, c: d
+         * @param map
+         * @param string
+         */
+        static void
+        transferStringToMap(std::unordered_map<std::string, std::string>& map,
+                            const std::string& string);
+
+        /**
+         * @brief transfer map to string
+         * @param map
+         * @return std::string, such as a: b, c: d
+         */
+        static std::string transferMapToString(std::unordered_map<std::string, std::string>&map);
 
         static bool isDigit(char character);
     };
