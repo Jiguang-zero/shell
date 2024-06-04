@@ -18,6 +18,12 @@ const char* builtin_command[] = {
 #ifdef ZEARO_BASH_ECHO_COMMAND_H
         "echo",
 #endif
+#ifdef ZEARO_BASH_ALIAS_COMMAND_H
+        "alias",
+#endif
+#ifdef ZEARO_BASH_UNALIAS_COMMAND_H
+        "unalias",
+#endif
         "help",
         "exit"
 };
@@ -32,6 +38,12 @@ int (*builtin_command_function[]) (char**) = {
 #endif
 #ifdef ZEARO_BASH_ECHO_COMMAND_H
         &zbash_echo_command,
+#endif
+#ifdef ZEARO_BASH_ALIAS_COMMAND_H
+        &zbash_alias_command,
+#endif
+#ifdef ZEARO_BASH_UNALIAS_COMMAND_H
+        &zbash_unalias_command,
 #endif
         &zbash_help_command,
         &zbash_exit_command,
