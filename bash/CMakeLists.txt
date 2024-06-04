@@ -11,4 +11,6 @@ add_executable(zearoBash shell.cpp
         builtins/builtins.cpp
         execute.cpp
         repl.cpp
+        CommandCompleter.h
+        CommandCompleter.cpp
 )

@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include "read.h"
+#include "CommandCompleter.h"
 
 namespace zearo_bash_shell {
     myInput *myInput::getInstance() {
@@ -23,6 +24,7 @@ namespace zearo_bash_shell {
         string line;
         int ch;
 
+        auto completer = zbashCommandCompleter::CommandCompleter::getInstance();
 
         initTerminalInputWay();
         while (true) {
@@ -32,32 +34,38 @@ namespace zearo_bash_shell {
             if (ch == EOF) {
                 recoverTerminalInputWay();
                 exit(EXIT_SUCCESS);
-            }
-            else if (ch == '\n') {
+            } else if (ch == '\n') {
                 return inputEnter(line);
-            }
-            else if (ch == '\t') {
-                continue;
+            } else if (ch == '\t') {
+                auto p = completer->completePart(line);
+                for (int i = 0; i < p.second; i++) inputBackSpace(line);
+                auto t = completer->getTemp(p.first);
+                line += t;
+                printf("%s", t.c_str());
             }
 
                 // When input backspace or del
                 // We test that when we enter backspace , it will print 127.
-            else if (ch == 127 ) {
+            else if (ch == 127) {
                 if (line.empty()) {
                     continue;
                 }
 
                 inputBackSpace(line);
-            }
-            else {
+            } else {
                 putchar(ch);
                 line.push_back(static_cast<char>(ch));
-                currPosition ++;
+                currPosition++;
             }
+            if(completer->getPrevCh() != '\t' && ch != '\t') {
+                completer->reInitialize();
+            }
+            completer->setPrevCh(ch);
         }
 
     }
-    myInput* myInput::instance = nullptr;
+
+    myInput *myInput::instance = nullptr;
 
     void myInput::initTerminalInputWay() {
         tcgetattr(STDIN_FILENO, &old_t);
@@ -71,20 +79,20 @@ namespace zearo_bash_shell {
     }
 
     void myInput::inputBackSpace(string &line) {
+        if (line.empty()) return;
         int row, col;
         getCursorPosition(&row, &col);
         if (col == 1) {
             printf("\033[1F\033[999C");
             putchar(' ');
-        }
-        else {
+        } else {
             printf("\b \b");
         }
         line.pop_back();
     }
 
-    char* myInput::inputEnter(string &line) {
-        char * res = new char[line.length() + 1];
+    char *myInput::inputEnter(string &line) {
+        char *res = new char[line.length() + 1];
         putchar('\n');
         strcpy(res, line.c_str());
         recoverTerminalInputWay();
