@@ -9,9 +9,20 @@
 #include "cstdlib"
 #endif // ZEARO_BASH_INCLUDE_C_STDLIB
 
+
+#ifndef ZEARO_BASH_INCLUDE_BUILTINS
+#include "builtins/builtins.h"
+#endif //ZEARO_BASH_INCLUDE_BUILTINS
+
 int zbash_execute(char** args) {
     if (args == nullptr || args[0] == nullptr) {
         return 1;
+    }
+
+    for (int i = 0; i < builtin_command_numbers(); i ++ ) {
+        if (strcmp(args[0], builtin_command[i]) == 0) {
+            return (*builtin_command_function[i])(args);
+        }
     }
 
     return zbash_execute_disk_command(args);

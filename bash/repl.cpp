@@ -9,6 +9,8 @@
 #include <cstdlib>
 #endif // ZEARO_BASH_INCLUDE_C_STDLIB
 
+#include "prompt.h"
+
 void zbash_repl() {
     char *line;
     char **args;
