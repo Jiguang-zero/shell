@@ -20,8 +20,6 @@
 
 #include "pipeline.h"
 
-#include "alias.h"
-
 bool isPipeCommand(char *line) {
     for (int i = 0; i < strlen(line); i++) {
         if (line[i] == '|') {
