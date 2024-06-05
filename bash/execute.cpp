@@ -68,7 +68,6 @@ int zbash_execute(char *line, char **args) {
         // remove the symbol '&" at the end
         int argc = -1;
         while (args[++argc] != nullptr) {}
-        free(args + argc - 1);
         args[argc - 1] = nullptr;
         return zbash_execute_disk_command(args, mode);
     }
