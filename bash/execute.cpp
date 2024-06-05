@@ -34,6 +34,7 @@ bool isBackgroundCommand(char *line) {
         if (line[i] == ' ') continue;
         return line[i] == '&';
     }
+    return false;
 }
 
 bool isRedirectCommand(char *line) {
