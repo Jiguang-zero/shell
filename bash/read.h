@@ -24,34 +24,35 @@ namespace zearo_bash_shell {
 
         ~myInput() = default;
 
-        static myInput* instance;
+        static myInput *instance;
 
     public:
         // delete copy for single instance
-        const myInput &operator=(const myInput& _) = delete;
-        myInput(const myInput& _) = delete;
+        const myInput &operator=(const myInput &_) = delete;
+
+        myInput(const myInput &_) = delete;
 
     public:
         /**
          * @brief get the only instance of this class.
          * @return
          */
-        static myInput* getInstance();
+        static myInput *getInstance();
 
-        char* inputOneLine();
+        char *inputOneLine();
 
         /**
          * @brief When we press backspace key, it will call this function.
          * @param line string_dealing&
          */
-        static void inputBackSpace(string & line);
+        static void inputBackSpace(string &line);
 
         /**
          * @brief When we press enter key, it will call this function.
          * @param line
          * @return char*.
          */
-        char* inputEnter(string & line);
+        char *inputEnter(string &line);
 
 
     private:
@@ -64,7 +65,7 @@ namespace zearo_bash_shell {
          * @param row
          * @param col
          */
-        static void getCursorPosition(int * row, int * col);
+        static void getCursorPosition(int *row, int *col);
 
         [[maybe_unused]] static int getCursorColOnly();
 
@@ -74,9 +75,7 @@ namespace zearo_bash_shell {
     };
 
 
-
 }
-
 
 
 #ifndef ZEARO_BASH_GET_LINE
