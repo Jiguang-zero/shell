@@ -17,4 +17,5 @@ add_executable(zearoBash shell.cpp
         utils/string_dealing.cpp
         pipeline.cpp
         alias.cpp
+        highlighter.cpp
 )

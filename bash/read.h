@@ -56,6 +56,7 @@ namespace zearo_bash_shell {
 
     private:
         struct termios old_t{}, new_t{};
+        bool changeColor = false;
 
     private:
         /**

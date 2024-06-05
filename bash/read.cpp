@@ -5,6 +5,7 @@
 #include <cstdio>
 #include "read.h"
 #include "CommandCompleter.h"
+#include "highlighter.h"
 #include "alias.h"
 
 namespace zearo_bash_shell {
@@ -37,14 +38,18 @@ namespace zearo_bash_shell {
                 exit(EXIT_SUCCESS);
             } else if (ch == '\n') {
                 completer->reInitialize();
+                highLighter->clear();
                 return inputEnter(line);
             } else if (ch == '\t') {
                 auto p = completer->completePart(line);
                 if (p.first != -1) {
+                    if (line.back() == ' ') highLighter->add("red");
                     for (int i = 0; i < p.second; i++) inputBackSpace(line);
                     auto t = completer->getTemp(p.first);
                     line += t;
-                    printf("%s", t.c_str());
+                    //                    printf("%s", t.c_str());
+                    printf("%s%s\033[0m", highLighter->getBack().c_str(), t.c_str());
+                    //                    printf("\033[0m\033[1;33m%s\033[0m", t.c_str());
                 }
             }
 
@@ -54,10 +59,17 @@ namespace zearo_bash_shell {
                 if (line.empty()) {
                     continue;
                 }
-
+                char prev = line.back(), backCh = '\0';
                 inputBackSpace(line);
+                if (!line.empty()) backCh = line.back();
+                highLighter->popOrNot(line.empty(), prev, backCh);
             } else {
-                putchar(ch);
+                //                putchar(ch);
+                char backCh = '\0';
+                if (!line.empty()) backCh = line.back();
+                highLighter->addOrNot(line.empty(), (char) ch, backCh);
+                printf("%s%c\033[0m", highLighter->getBack().c_str(), ch);
+                //                printf("\033[0m\033[1;33m%c\033[0m", ch);
                 line.push_back(static_cast<char>(ch));
                 currPosition++;
             }

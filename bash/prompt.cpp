@@ -31,5 +31,12 @@ void printPrompt() {
     // 获取当前用户的操作权限
     char promptCharacter = getuid() ? '$' : '#';
 
-    printf("%s@%s:%s %c ", username, hostname, currentDir.c_str(), promptCharacter);
+    //    printf("%s@%s:%s %c ", username, hostname, currentDir.c_str(), promptCharacter);
+
+    // username is green
+    printf("\033[0;32m%s@%s:\033[0m", username, hostname);
+    //current directory is pink
+    printf("\033[0;35m%s\033[0m", currentDir.c_str());
+    // prompt character is white
+    printf("\033[0;37m %c \033[0m", promptCharacter);
 }
