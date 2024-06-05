@@ -20,8 +20,6 @@
 
 #include "pipeline.h"
 
-#include "alias.h"
-
 bool isPipeCommand(char *line) {
     for (int i = 0; i < strlen(line); i++) {
         if (line[i] == '|') {
@@ -92,6 +90,8 @@ int zbash_execute(char *line, char **args) {
         // 执行外部命令, mode为 0表示前台执行，mode为 1表示后台执行
         return zbash_execute_disk_command(args, mode);
     }
+
+    return 1;
 }
 
 int zbash_execute_disk_command(char **args, int mode) {

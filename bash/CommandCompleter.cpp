@@ -7,7 +7,7 @@ namespace zbashCommandCompleter {
     vector<string> CommandCompleter::split(const std::string &str, const std::string &delim) {
         vector<string> res;
         if (str.empty()) return res;
-        size_t prev = 0, pos = 0;
+        size_t prev = 0, pos;
         do {
             pos = str.find(delim, prev);
             if (pos == string::npos) pos = str.length();
@@ -182,7 +182,8 @@ namespace zbashCommandCompleter {
     }
 
     const string &CommandCompleter::getTemp(int index) {
-        if (index < 0 || index >= temp.size()) return "";
+        static const string emptyString;
+        if (index < 0 || index >= temp.size()) return emptyString;
         return temp[index];
     }
 
