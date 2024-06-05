@@ -76,8 +76,6 @@ int zbash_execute(char *line, char **args) {
     }
     */
     else {
-        
-
         // 执行内置命令
         for (int i = 0; i < builtin_command_numbers(); i++) {
             if (strcmp(args[0], builtin_command[i]) == 0) {
@@ -87,6 +85,9 @@ int zbash_execute(char *line, char **args) {
         // 执行外部命令, mode为 0表示前台执行，mode为 1表示后台执行
         return zbash_execute_disk_command(args, mode);
     }
+
+    // Avoid unforeseen mistakes
+    return 1;
 }
 
 int zbash_execute_disk_command(char **args, int mode) {

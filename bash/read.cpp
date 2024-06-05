@@ -96,16 +96,18 @@ namespace zearo_bash_shell {
     }
 
     char *myInput::inputEnter(string &line) {
-        size_t startPos = line.find_first_not_of(' ');
-        std::string trimmedLine = line.substr(startPos);
-        line = trimmedLine;
+        if (!line.empty()) {
+            size_t startPos = line.find_first_not_of(' ');
+            std::string trimmedLine = line.substr(startPos);
+            line = trimmedLine;
 
-        for (const auto & pair : alias::getInstance()->getAliasMapOutSide()) {
-            if (line.find(pair.first) == 0) {
-                line.replace(0, pair.first.length(), pair.second);
-                break;
+            for (const auto &pair: alias::getInstance()->getAliasMapOutSide()) {
+                if (line.find(pair.first) == 0) {
+                    line.replace(0, pair.first.length(), pair.second);
+                    break;
+                }
+
             }
-
         }
 
         char *res = new char[line.length() + 1];
