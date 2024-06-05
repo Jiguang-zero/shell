@@ -32,12 +32,10 @@ bool isPipeCommand(char *line) {
 }
 
 bool isBackgroundCommand(char *line) {
-    for (int i = 0; i < strlen(line); i++) {
-        if (line[i] == '&') {
-            return true;
-        }
+    for (int i = (int) strlen(line) - 1; i >= 0; i--) {
+        if (line[i] == ' ') continue;
+        return line[i] == '&';
     }
-    return false;
 }
 
 bool isRedirectCommand(char *line) {
@@ -69,16 +67,21 @@ int zbash_execute(char *line, char **args) {
     } else if (isBackgroundCommand(line)) {
         // 在后台运行程序
         mode = 1;
+        // remove the symbol '&" at the end
+        int argc = -1;
+        while (args[++argc] != nullptr) {}
+        free(args + argc - 1);
+        args[argc - 1] = nullptr;
         return zbash_execute_disk_command(args, mode);
     }
-    /*
-     // We just implemented the redirection of the echo function
-    else if (isRedirectCommand(line)) {
-        // 执行重定向命令
-    }
-    */
+        /*
+         // We just implemented the redirection of the echo function
+        else if (isRedirectCommand(line)) {
+            // 执行重定向命令
+        }
+        */
     else {
-        
+
 
         // 执行内置命令
         for (int i = 0; i < builtin_command_numbers(); i++) {
