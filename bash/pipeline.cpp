@@ -34,16 +34,16 @@ int pipe_command(char *buf) {
     writepipe[pos] = '\0';
     readpipe[strlen(buf) - pos - 1] = '\0';
 
-    auto p = writepipe;
-    while (*p) {
-        std::cout << *p;
-        p++;
-    }
-    p = readpipe;
-    while (*p) {
-        std::cout << *p;
-        p++;
-    }
+    //    auto p = writepipe;
+    //    while (*p) {
+    //        std::cout << *p;
+    //        p++;
+    //    }
+    //    p = readpipe;
+    //    while (*p) {
+    //        std::cout << *p;
+    //        p++;
+    //    }
 
 
     if (pipe(fd) < 0) {
@@ -56,28 +56,28 @@ int pipe_command(char *buf) {
         perror("fork failed");
         exit(1);
     }
-
+    // 子进程
     if (pid == 0) {
-        close(fd[0]);
-        close(1);
-        dup(fd[1]);
-        close(fd[1]);
+        close(fd[0]); // 关闭读端
+        close(1); // 关闭标准输出
+        dup(fd[1]); // 复制写端到标准输出
+        close(fd[1]); // 关闭写端
         auto args = zbash_parse_line(writepipe);
-        execvp(args[0], args);
+        execvp(args[0], args); // 执行writepipe
         return 0;
-    } else {
+    } else { // 父进程
         int status;
         waitpid(pid, &status, 0);
         int err = WEXITSTATUS(status);
         if (err) {
             printf("Error: %s\n", strerror(err));
         }
-        close(fd[1]);
-        close(0);
-        dup(fd[0]);
-        close(fd[0]);
+        close(fd[1]); // 关闭写端
+        close(0); // 关闭标准输入
+        dup(fd[0]); // 复制读端到标准输入
+        close(fd[0]); // 关闭读端
         auto args = zbash_parse_line(readpipe);
-        execvp(args[0], args);
+        execvp(args[0], args);  // 执行readpipe
         return 0;
     }
 }

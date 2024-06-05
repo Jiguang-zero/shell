@@ -9,7 +9,7 @@
 #define ZBASH_TOK_BUFSIZE 64
 #define ZBASH_TOK_DELIM " \t\r\n\a"
 
-char** zbash_parse_line(char* line) {
+char **zbash_parse_line(char *line) {
     int bufsize = ZBASH_TOK_BUFSIZE, position = 0;
     char **tokens = (char **) malloc(bufsize * sizeof(char *));
     char *token, **tokens_backup;
